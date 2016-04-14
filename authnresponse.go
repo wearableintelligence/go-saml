@@ -6,7 +6,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/parsable/go-saml/util"
+	"github.com/dorsha/go-saml/util"
 )
 
 func ParseCompressedEncodedResponse(b64ResponseXML string) (*Response, error) {
@@ -60,7 +60,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no Assertions")
 	}
 
-	if len(r.Signature.SignatureValue.Value) == 0 {
+	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
@@ -76,9 +76,11 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("subject recipient mismatch, expected: " + s.AssertionConsumerServiceURL + " not " + r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient)
 	}
 
-	err := r.VerifySignature(s.IDPPublicCertPath)
-	if err != nil {
-		return err
+	if s.SPSignRequest {
+		err := r.VerifySignature(s.IDPPublicCertPath)
+		if err != nil {
+			return err
+		}
 	}
 
 	//CHECK TIMES
