@@ -40,11 +40,11 @@ func (s *ServiceProviderSettings) Init() (err error) {
 		if err != nil {
 			panic(err)
 		}
-	}
 
-	s.iDPPublicCert, err = util.LoadCertificate(s.IDPPublicCertPath)
-	if err != nil {
-		panic(err)
+		s.iDPPublicCert, err = util.LoadCertificate(s.IDPPublicCertPath)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	return nil
