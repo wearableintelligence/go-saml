@@ -21,7 +21,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/parsable/go-saml/util"
+	"github.com/99designs/go-saml/util"
 )
 
 func ParseCompressedEncodedRequest(b64RequestXML string) (*AuthnRequest, error) {

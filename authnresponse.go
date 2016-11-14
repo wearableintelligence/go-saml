@@ -6,7 +6,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/parsable/go-saml/util"
+	"github.com/99designs/go-saml/util"
 )
 
 func ParseCompressedEncodedResponse(b64ResponseXML string) (*Response, error) {
@@ -60,7 +60,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no Assertions")
 	}
 
-	if len(r.Signature.SignatureValue.Value) == 0 {
+	if len(r.Signature.SignatureValue.Value) == 0 && len(r.Assertion.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
