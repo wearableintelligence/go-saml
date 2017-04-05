@@ -299,7 +299,7 @@ type Attribute struct {
 	Name           string `xml:",attr"`
 	FriendlyName   string `xml:",attr"`
 	NameFormat     string `xml:",attr"`
-	AttributeValue AttributeValue
+	AttributeValue []AttributeValue
 }
 
 type AttributeStatement struct {
