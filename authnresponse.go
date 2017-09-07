@@ -64,7 +64,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no signature")
 	}
 
-	if r.Destination != s.AssertionConsumerServiceURL {
+	if len(r.Destination) > 0 && r.Destination != s.AssertionConsumerServiceURL {
 		return errors.New("destination mismath expected: " + s.AssertionConsumerServiceURL + " not " + r.Destination)
 	}
 
@@ -309,13 +309,14 @@ func (r *Response) AddAttribute(name, value string) {
 		},
 		Name:       name,
 		NameFormat: "urn:oasis:names:tc:SAML:2.0:attrname-format:basic",
-		AttributeValue: AttributeValue{
+		AttributeValue: []AttributeValue{{
 			XMLName: xml.Name{
 				Local: "saml:AttributeValue",
 			},
 			Type:  "xs:string",
 			Value: value,
 		},
+	 	},
 	})
 }
 
@@ -357,11 +358,16 @@ func (r *Response) CompressedEncodedSignedString(privateKeyPath string) (string,
 }
 
 // GetAttribute by Name or by FriendlyName. Return blank string if not found
-func (r *Response) GetAttribute(name string) string {
+func (r *Response) GetAttribute(name string) []string {
+	values := []string{}
 	for _, attr := range r.Assertion.AttributeStatement.Attributes {
 		if attr.Name == name || attr.FriendlyName == name {
-			return attr.AttributeValue.Value
+			for _, val := range attr.AttributeValue {
+				values = append(values, val.Value)
+			}
+			return values
 		}
 	}
-	return ""
+	return values
 }
+
