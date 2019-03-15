@@ -137,7 +137,7 @@ type Extensions struct {
 	MDAttr  string `xml:"xmlns:mdattr,attr"`
 	MDRPI   string `xml:"xmlns:mdrpi,attr"`
 
-	EntityAttributes string `xml:"EntityAttributes"`
+	EntityAttributes *string `xml:"EntityAttributes"`
 }
 
 type SSODescriptor struct {
