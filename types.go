@@ -127,7 +127,7 @@ type EntityDescriptor struct {
 	MD       string `xml:"xmlns:md,attr"`
 	EntityId string `xml:"entityID,attr"`
 
-	Extensions      Extensions      `xml:"Extensions"`
+	Extensions      *Extensions      `xml:"Extensions,omitempty"`
 	SPSSODescriptor SPSSODescriptor `xml:"SPSSODescriptor"`
 }
 

@@ -15,14 +15,16 @@ func (s *ServiceProviderSettings) GetEntityDescriptor() (string, error) {
 		MD:       "urn:oasis:names:tc:SAML:2.0:metadata",
 		EntityId: s.AssertionConsumerServiceURL,
 
-		Extensions: Extensions{
-			XMLName: xml.Name{
-				Local: "md:Extensions",
-			},
-			Alg:    "urn:oasis:names:tc:SAML:metadata:algsupport",
-			MDAttr: "urn:oasis:names:tc:SAML:metadata:attribute",
-			MDRPI:  "urn:oasis:names:tc:SAML:metadata:rpi",
-		},
+		Extensions: nil,
+		/* Currently disabled. When enabling make sure the element inside has a non-saml namespace
+		Extensions: &Extensions{
+			XMLName = xml.Name{
+			Local: "md:Extensions",
+		}
+			Alg =  "urn:oasis:names:tc:SAML:metadata:algsupport"
+			MDAttr = "urn:oasis:names:tc:SAML:metadata:attribute"
+			MDRPI = "urn:oasis:names:tc:SAML:metadata:rpi"
+		}*/
 		SPSSODescriptor: SPSSODescriptor{
 			ProtocolSupportEnumeration: "urn:oasis:names:tc:SAML:2.0:protocol",
 			SigningKeyDescriptor: KeyDescriptor{
