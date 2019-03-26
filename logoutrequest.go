@@ -26,11 +26,8 @@ import (
 // GetSignedAuthnRequest returns a singed XML document that represents a AuthnRequest SAML document
 func (s *ServiceProviderSettings) GetLogoutRequest(nameID string, sessionIds... string) *LogoutRequest {
 	r := NewLogoutRequest(s.SPSignRequest)
-	r.Issuer.Url = s.IDPSSODescriptorURL
-	if s.SPSignRequest {
-		r.Signature.KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
-		r.Destination = s.IDPSSOLogoutURL
-	}
+	r.Issuer.Url = s.AssertionConsumerServiceURL
+	r.Destination = s.IDPSSOLogoutURL
 	r.NameID.Value = nameID
 	if len(sessionIds) > 0 {
 		r.SessionIndex = make([]SessionIndex, len(sessionIds))
@@ -67,90 +64,90 @@ func NewLogoutRequest(sign bool) *LogoutRequest {
 			Value: "", // caller must populate
 		},
 	}
-
-	if sign {
-		logoutReq.SAMLSIG = "http://www.w3.org/2000/09/xmldsig#"
-		logoutReq.Signature = &Signature{
-			XMLName: xml.Name{
-				Local: "samlsig:Signature",
-			},
-			Id: "Signature1",
-			SignedInfo: SignedInfo{
+	/* Single logout request should always be signed. currently we support redirect only.
+		if sign {
+			logoutReq.SAMLSIG = "http://www.w3.org/2000/09/xmldsig#"
+			logoutReq.Signature = &Signature{
 				XMLName: xml.Name{
-					Local: "samlsig:SignedInfo",
+					Local: "samlsig:Signature",
 				},
-				CanonicalizationMethod: CanonicalizationMethod{
+				Id: "Signature1",
+				SignedInfo: SignedInfo{
 					XMLName: xml.Name{
-						Local: "samlsig:CanonicalizationMethod",
+						Local: "samlsig:SignedInfo",
 					},
-					Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
-				},
-				SignatureMethod: SignatureMethod{
-					XMLName: xml.Name{
-						Local: "samlsig:SignatureMethod",
-					},
-					Algorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
-				},
-				SamlsigReference: SamlsigReference{
-					XMLName: xml.Name{
-						Local: "samlsig:Reference",
-					},
-					URI: "#" + id,
-					Transforms: Transforms{
+					CanonicalizationMethod: CanonicalizationMethod{
 						XMLName: xml.Name{
-							Local: "samlsig:Transforms",
+							Local: "samlsig:CanonicalizationMethod",
 						},
-						Transforms: []Transform{
-							{
-								XMLName: xml.Name{
-									Local: "samlsig:Transform",
-								},
-								Algorithm: "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
+						Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
+					},
+					SignatureMethod: SignatureMethod{
+						XMLName: xml.Name{
+							Local: "samlsig:SignatureMethod",
+						},
+						Algorithm: "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
+					},
+					SamlsigReference: SamlsigReference{
+						XMLName: xml.Name{
+							Local: "samlsig:Reference",
+						},
+						URI: "#" + id,
+						Transforms: Transforms{
+							XMLName: xml.Name{
+								Local: "samlsig:Transforms",
 							},
-							{
-								XMLName: xml.Name{
-									Local: "samlsig:Transform",
+							Transforms: []Transform{
+								{
+									XMLName: xml.Name{
+										Local: "samlsig:Transform",
+									},
+									Algorithm: "http://www.w3.org/2000/09/xmldsig#enveloped-signature",
 								},
-								Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
+								{
+									XMLName: xml.Name{
+										Local: "samlsig:Transform",
+									},
+									Algorithm: "http://www.w3.org/2001/10/xml-exc-c14n#",
+								},
+							},
+						},
+						DigestMethod: DigestMethod{
+							XMLName: xml.Name{
+								Local: "samlsig:DigestMethod",
+							},
+							Algorithm: "http://www.w3.org/2001/04/xmlenc#sha256",
+						},
+						DigestValue: DigestValue{
+							XMLName: xml.Name{
+								Local: "samlsig:DigestValue",
 							},
 						},
 					},
-					DigestMethod: DigestMethod{
-						XMLName: xml.Name{
-							Local: "samlsig:DigestMethod",
-						},
-						Algorithm: "http://www.w3.org/2001/04/xmlenc#sha256",
-					},
-					DigestValue: DigestValue{
-						XMLName: xml.Name{
-							Local: "samlsig:DigestValue",
-						},
-					},
 				},
-			},
-			SignatureValue: SignatureValue{
-				XMLName: xml.Name{
-					Local: "samlsig:SignatureValue",
-				},
-			},
-			KeyInfo: KeyInfo{
-				XMLName: xml.Name{
-					Local: "samlsig:KeyInfo",
-				},
-				X509Data: X509Data{
+				SignatureValue: SignatureValue{
 					XMLName: xml.Name{
-						Local: "samlsig:X509Data",
-					},
-					X509Certificate: X509Certificate{
-						XMLName: xml.Name{
-							Local: "samlsig:X509Certificate",
-						},
-						Cert: "", // caller must populate cert,
+						Local: "samlsig:SignatureValue",
 					},
 				},
-			},
-		}
-	}
+				KeyInfo: KeyInfo{
+					XMLName: xml.Name{
+						Local: "samlsig:KeyInfo",
+					},
+					X509Data: X509Data{
+						XMLName: xml.Name{
+							Local: "samlsig:X509Data",
+						},
+						X509Certificate: X509Certificate{
+							XMLName: xml.Name{
+								Local: "samlsig:X509Certificate",
+							},
+							Cert: "", // caller must populate cert,
+						},
+					},
+				},
+			}
+		}*/
 	return logoutReq
 }
 

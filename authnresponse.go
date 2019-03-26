@@ -48,6 +48,7 @@ func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 }
 
 func (r *Response) Validate(s *ServiceProviderSettings) error {
+
 	if r.Version != "2.0" {
 		return errors.New("unsupported SAML Version")
 	}
@@ -56,12 +57,10 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("missing ID attribute on SAML Response")
 	}
 
+	//Assertion Checks only apply to auth scenario. in logout scenario they would not exist
+
 	if len(r.Assertion.ID) == 0 {
 		return errors.New("no Assertions")
-	}
-
-	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
-		return errors.New("no signature")
 	}
 
 	if len(r.Destination) > 0 && r.Destination != s.AssertionConsumerServiceURL {
@@ -72,15 +71,8 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("assertion method exception")
 	}
 
-	if r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient != s.AssertionConsumerServiceURL {
+	if r.XMLName.Local == "Response" && r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient != s.AssertionConsumerServiceURL {
 		return errors.New("subject recipient mismatch, expected: " + s.AssertionConsumerServiceURL + " not " + r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient)
-	}
-
-	if s.SPSignRequest {
-		err := r.VerifySignature(s.IDPPublicCertPath)
-		if err != nil {
-			return err
-		}
 	}
 
 	//CHECK TIMES
@@ -91,6 +83,17 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 	}
 	if notOnOrAfter.Before(time.Now()) {
 		return errors.New("assertion has expired on: " + expires)
+	}
+
+	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
+		return errors.New("no signature")
+	}
+
+	if s.SPSignRequest {
+		err := r.VerifySignature(s.IDPPublicCertPath)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

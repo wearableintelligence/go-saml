@@ -13,6 +13,7 @@ type ServiceProviderSettings struct {
 	IDPSSODescriptorURL         string
 	IDPPublicCertPath           string
 	AssertionConsumerServiceURL string
+	SPLogoutServiceUrl			string
 	SPSignRequest               bool
 
 	hasInit       bool
