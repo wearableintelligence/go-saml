@@ -152,7 +152,7 @@ type SPSSODescriptor struct {
 	SSODescriptor
 	SigningKeyDescriptor    KeyDescriptor
 	EncryptionKeyDescriptor KeyDescriptor
-	// SingleLogoutService        SingleLogoutService `xml:"SingleLogoutService"`
+	SingleLogoutService        SingleLogoutService `xml:"SingleLogoutService"`
 	AssertionConsumerServices []AssertionConsumerService
 }
 
@@ -208,6 +208,20 @@ type Response struct {
 
 	Assertion          Assertion          `xml:"Assertion"`
 	EncryptedAssertion EncryptedAssertion `xml:"EncryptedAssertion"`
+	Signature          Signature          `xml:"Signature"`
+	Issuer             Issuer             `xml:"Issuer"`
+	Status             Status             `xml:"Status"`
+	originalString     string
+}
+
+type LogoutResponse struct {
+	XMLName      xml.Name
+	Destination  string `xml:"Destination,attr"`
+	ID           string `xml:"ID,attr"`
+	Version      string `xml:"Version,attr"`
+	IssueInstant string `xml:"IssueInstant,attr"`
+	InResponseTo string `xml:"InResponseTo,attr"`
+
 	Signature          Signature          `xml:"Signature"`
 	Issuer             Issuer             `xml:"Issuer"`
 	Status             Status             `xml:"Status"`
@@ -347,4 +361,9 @@ type Metadata struct {
 	RoleDescriptor   []RoleDescriptor  `xml:"RoleDescriptor,omitempty"`
 	SPSSODescriptor  *SPSSODescriptor  `xml:"SPSSODescriptor,omitempty"`
 	IDPSSODescriptor *IDPSSODescriptor `xml:"IDPSSODescriptor,omitempty"`
+}
+
+type RelayState struct {
+	RelayState		string
+	Separator		string
 }

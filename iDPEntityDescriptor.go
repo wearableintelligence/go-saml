@@ -73,13 +73,10 @@ func (s *ServiceProviderSettings) GetEntityDescriptor() (string, error) {
 					},
 				},
 			},
-			// SingleLogoutService{
-			// 	XMLName: xml.Name{
-			// 		Local: "md:SingleLogoutService",
-			// 	},
-			// 	Binding:  "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect",
-			// 	Location: "---TODO---",
-			// },
+			SingleLogoutService: SingleLogoutService{
+			 	Binding:  "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST",
+			 	Location: s.SPLogoutServiceUrl,
+			 },
 			AssertionConsumerServices: []AssertionConsumerService{
 				AssertionConsumerService{
 					XMLName: xml.Name{
