@@ -32,7 +32,6 @@ func SignString(toSign string, privateKeyPath string) (string, error) {
 		return "", err
 	}
 	sig := base64.StdEncoding.EncodeToString(signed)
-	fmt.Printf("Signature: %v\n", sig)
 
 	return sig ,err
 }
