@@ -38,7 +38,8 @@ func sign(xml string, privateKeyPath string, id string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer deleteTempFile(samlXmlsecInput.Name())
+	// don't delete -- we want it for debugging for the time being
+	// defer deleteTempFile(samlXmlsecInput.Name())
 	samlXmlsecInput.WriteString("<?xml version='1.0' encoding='UTF-8'?>\n")
 	samlXmlsecInput.WriteString(xml)
 	samlXmlsecInput.Close()
@@ -47,7 +48,8 @@ func sign(xml string, privateKeyPath string, id string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer deleteTempFile(samlXmlsecOutput.Name())
+	// don't delete -- we want it for debugging for the time being
+	// defer deleteTempFile(samlXmlsecOutput.Name())
 	samlXmlsecOutput.Close()
 
 	// fmt.Println("xmlsec1", "--sign", "--privkey-pem", privateKeyPath,
