@@ -222,12 +222,7 @@ func NewSignedResponse() *Response {
 					XMLName: xml.Name{
 						Local: "samlsig:X509Data",
 					},
-					X509Certificate: X509Certificate{
-						XMLName: xml.Name{
-							Local: "samlsig:X509Certificate",
-						},
-						Cert: "", // caller must populate cert,
-					},
+					X509Certificates: []X509Certificate{NewX509Certificate()},
 				},
 			},
 		},

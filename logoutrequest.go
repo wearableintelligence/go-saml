@@ -24,11 +24,11 @@ import (
 )
 
 // GetSignedAuthnRequest returns a singed XML document that represents a AuthnRequest SAML document
-func (s *ServiceProviderSettings) GetLogoutRequest(nameID string, sessionIds... string) *LogoutRequest {
+func (s *ServiceProviderSettings) GetLogoutRequest(nameID string, sessionIds ...string) *LogoutRequest {
 	r := NewLogoutRequest(s.SPSignRequest)
 	r.Issuer.Url = s.IDPSSODescriptorURL
 	if s.SPSignRequest {
-		r.Signature.KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
+		r.Signature.KeyInfo.X509Data.X509Certificates = NewX509Certificates(s.PublicCerts())
 		r.Destination = s.IDPSSOLogoutURL
 	}
 	r.NameID.Value = nameID
@@ -49,18 +49,18 @@ func NewLogoutRequest(sign bool) *LogoutRequest {
 		XMLName: xml.Name{
 			Local: "samlp:LogoutRequest",
 		},
-		SAMLP:                       "urn:oasis:names:tc:SAML:2.0:protocol",
-		SAML:                        "urn:oasis:names:tc:SAML:2.0:assertion",
-		ID:                          id,
-		Version:                     "2.0",
+		SAMLP:   "urn:oasis:names:tc:SAML:2.0:protocol",
+		SAML:    "urn:oasis:names:tc:SAML:2.0:assertion",
+		ID:      id,
+		Version: "2.0",
 		Issuer: Issuer{
 			XMLName: xml.Name{
 				Local: "saml:Issuer",
 			},
-			Url:  "", // caller must populate ar.AppSettings.Issuer
+			Url: "", // caller must populate ar.AppSettings.Issuer
 		},
 		IssueInstant: time.Now().UTC().Format(time.RFC3339),
-		NameID: NameID {
+		NameID: NameID{
 			XMLName: xml.Name{
 				Local: "saml:NameID",
 			},
@@ -141,12 +141,7 @@ func NewLogoutRequest(sign bool) *LogoutRequest {
 					XMLName: xml.Name{
 						Local: "samlsig:X509Data",
 					},
-					X509Certificate: X509Certificate{
-						XMLName: xml.Name{
-							Local: "samlsig:X509Certificate",
-						},
-						Cert: "", // caller must populate cert,
-					},
+					X509Certificates: []X509Certificate{NewX509Certificate()},
 				},
 			},
 		}

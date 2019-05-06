@@ -86,7 +86,7 @@ func (s *ServiceProviderSettings) GetAuthnRequest() *AuthnRequest {
 	r.AssertionConsumerServiceURL = s.AssertionConsumerServiceURL
 	r.Issuer.Url = s.IDPSSODescriptorURL
 	if s.SPSignRequest {
-		r.Signature[0].KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
+		r.Signature[0].KeyInfo.X509Data.X509Certificates = NewX509Certificates(s.PublicCerts())
 		r.Destination = s.IDPSSOURL
 	}
 
@@ -111,6 +111,40 @@ func NewAuthnRequest() *AuthnRequest {
 	return NewAuthnRequestCustom(true)
 }
 
+func NewX509Certificates(certStrs []string) []X509Certificate {
+	// ensure the array is auto-populated with an empty entry
+	if certStrs == nil || len(certStrs) == 0 {
+		return []X509Certificate{
+			{
+				XMLName: xml.Name{
+					Local: "samlsig:X509Certificate",
+				},
+				Cert: "",
+			},
+		}
+	}
+
+	newCerts := make([]X509Certificate, len(certStrs), len(certStrs))
+	for i, certStr := range certStrs {
+		newCerts[i] = X509Certificate{
+			XMLName: xml.Name{
+				Local: "samlsig:X509Certificate",
+			},
+			Cert: certStr,
+		}
+	}
+	return newCerts
+}
+
+func NewX509Certificate() X509Certificate {
+	return X509Certificate{
+		XMLName: xml.Name{
+			Local: "samlsig:X509Certificate",
+		},
+		Cert: "", // caller must populate cert,
+	}
+}
+
 func NewAuthnRequestCustom(sign bool) *AuthnRequest {
 	id := util.ID()
 	authReq := &AuthnRequest{
@@ -127,7 +161,7 @@ func NewAuthnRequestCustom(sign bool) *AuthnRequest {
 			XMLName: xml.Name{
 				Local: "saml:Issuer",
 			},
-			Url:  "", // caller must populate ar.AppSettings.Issuer
+			Url: "", // caller must populate ar.AppSettings.Issuer
 		},
 		IssueInstant: time.Now().UTC().Format(time.RFC3339),
 		NameIDPolicy: &NameIDPolicy{
@@ -225,12 +259,7 @@ func NewAuthnRequestCustom(sign bool) *AuthnRequest {
 					XMLName: xml.Name{
 						Local: "samlsig:X509Data",
 					},
-					X509Certificate: X509Certificate{
-						XMLName: xml.Name{
-							Local: "samlsig:X509Certificate",
-						},
-						Cert: "", // caller must populate cert,
-					},
+					X509Certificates: []X509Certificate{NewX509Certificate()},
 				},
 			},
 		}

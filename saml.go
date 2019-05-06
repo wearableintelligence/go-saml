@@ -16,7 +16,7 @@ type ServiceProviderSettings struct {
 	SPSignRequest               bool
 
 	hasInit       bool
-	publicCert    string
+	publicCerts   []string
 	privateKey    string
 	iDPPublicCert string
 }
@@ -30,8 +30,8 @@ func (s *ServiceProviderSettings) Init() (err error) {
 	}
 	s.hasInit = true
 
-        if s.SPSignRequest {
-		s.publicCert, err = util.LoadCertificate(s.PublicCertPath)
+	if s.SPSignRequest {
+		s.publicCerts, err = util.LoadCertificateChain(s.PublicCertPath)
 		if err != nil {
 			panic(err)
 		}
@@ -50,11 +50,11 @@ func (s *ServiceProviderSettings) Init() (err error) {
 	return nil
 }
 
-func (s *ServiceProviderSettings) PublicCert() string {
+func (s *ServiceProviderSettings) PublicCerts() []string {
 	if !s.hasInit {
 		panic("Must call ServiceProviderSettings.Init() first")
 	}
-	return s.publicCert
+	return s.publicCerts
 }
 
 func (s *ServiceProviderSettings) PrivateKey() string {

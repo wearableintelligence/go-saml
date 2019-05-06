@@ -92,8 +92,8 @@ type SamlsigReference struct {
 }
 
 type X509Data struct {
-	XMLName         xml.Name
-	X509Certificate X509Certificate `xml:"X509Certificate"`
+	XMLName          xml.Name
+	X509Certificates []X509Certificate `xml:"X509Certificate"`
 }
 
 type Transforms struct {

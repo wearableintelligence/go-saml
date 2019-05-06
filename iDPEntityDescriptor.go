@@ -39,12 +39,7 @@ func (s *ServiceProviderSettings) GetEntityDescriptor() (string, error) {
 						XMLName: xml.Name{
 							Local: "ds:X509Data",
 						},
-						X509Certificate: X509Certificate{
-							XMLName: xml.Name{
-								Local: "ds:X509Certificate",
-							},
-							Cert: s.PublicCert(),
-						},
+						X509Certificates: NewX509Certificates(s.publicCerts),
 					},
 				},
 			},
@@ -62,12 +57,7 @@ func (s *ServiceProviderSettings) GetEntityDescriptor() (string, error) {
 						XMLName: xml.Name{
 							Local: "ds:X509Data",
 						},
-						X509Certificate: X509Certificate{
-							XMLName: xml.Name{
-								Local: "ds:X509Certificate",
-							},
-							Cert: s.PublicCert(),
-						},
+						X509Certificates: NewX509Certificates(s.publicCerts),
 					},
 				},
 			},
