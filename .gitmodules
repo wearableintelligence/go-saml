@@ -1,0 +1,256 @@
+[submodule "github.com/Sirupsen/logrus"]
+	path = vendor/github.com/Sirupsen/logrus
+	url = git@github.com:Sirupsen/logrus
+[submodule "github.com/bugsnag/bugsnag-go"]
+	path = vendor/github.com/bugsnag/bugsnag-go
+	url = git@github.com:bugsnag/bugsnag-go
+[submodule "github.com/lib/pq"]
+	path = vendor/github.com/lib/pq
+	url = git@github.com:lib/pq
+[submodule "github.com/onsi/gomega"]
+	path = vendor/github.com/onsi/gomega
+	url = git@github.com:onsi/gomega
+[submodule "github.com/sebest/logrusly"]
+	path = vendor/github.com/sebest/logrusly
+	url = git@github.com:sebest/logrusly
+[submodule "github.com/tuvistavie/securerandom"]
+	path = vendor/github.com/tuvistavie/securerandom
+	url = git@github.com:tuvistavie/securerandom
+[submodule "github.com/mattes/migrate"]
+	path = vendor/github.com/mattes/migrate
+	url = git@github.com:mattes/migrate
+[submodule "github.com/matryer/try"]
+	path = vendor/github.com/matryer/try
+	url = git@github.com:matryer/try
+[submodule "github.com/segmentio/analytics-go"]
+	path = vendor/github.com/segmentio/analytics-go
+	url = git@github.com:segmentio/analytics-go
+[submodule "github.com/parsable/go-saml"]
+	path = vendor/github.com/parsable/go-saml
+	url = git@github.com:parsable/go-saml
+[submodule "github.com/kardianos/osext"]
+	path = vendor/github.com/kardianos/osext
+	url = git@github.com:kardianos/osext
+[submodule "github.com/nu7hatch/gouuid"]
+	path = vendor/github.com/nu7hatch/gouuid
+	url = git@github.com:nu7hatch/gouuid
+[submodule "github.com/Shopify/sarama"]
+	path = vendor/github.com/Shopify/sarama
+	url = git@github.com:Shopify/sarama
+[submodule "github.com/goamz/goamz"]
+	path = vendor/github.com/goamz/goamz
+	url = git@github.com:goamz/goamz
+[submodule "golang.org/x/net"]
+	path = vendor/golang.org/x/net
+	url = https://go.googlesource.com/net
+[submodule "github.com/parsable/thrift"]
+	path = vendor/github.com/parsable/thrift
+	url = git@github.com:parsable/thrift
+	branch = wearint
+[submodule "golang.org/x/crypto"]
+	path = vendor/golang.org/x/crypto
+	url = https://go.googlesource.com/crypto
+	branch = master
+[submodule "github.com/parsable/events"]
+	path = vendor/github.com/parsable/events
+	url = git@github.com:parsable/events
+	branch = master
+[submodule "github.com/eapache/queue"]
+	path = vendor/github.com/eapache/queue
+	url = git@github.com:eapache/queue
+[submodule "github.com/klauspost/crc32"]
+	path = vendor/github.com/klauspost/crc32
+	url = git@github.com:klauspost/crc32
+[submodule "github.com/jehiah/go-strftime"]
+	path = vendor/github.com/jehiah/go-strftime
+	url = git@github.com:jehiah/go-strftime
+[submodule "github.com/bugsnag/osext"]
+	path = vendor/github.com/bugsnag/osext
+	url = git@github.com:bugsnag/osext
+[submodule "github.com/golang/snappy"]
+	path = vendor/github.com/golang/snappy
+	url = git@github.com:golang/snappy
+[submodule "github.com/bugsnag/panicwrap"]
+	path = vendor/github.com/bugsnag/panicwrap
+	url = git@github.com:bugsnag/panicwrap
+[submodule "github.com/vaughan0/go-ini"]
+	path = vendor/github.com/vaughan0/go-ini
+	url = git@github.com:vaughan0/go-ini
+[submodule "github.com/visionmedia/go-debug"]
+	path = vendor/github.com/visionmedia/go-debug
+	url = git@github.com:visionmedia/go-debug
+[submodule "github.com/xtgo/uuid"]
+	path = vendor/github.com/xtgo/uuid
+	url = git@github.com:xtgo/uuid
+[submodule "github.com/segmentio/go-loggly"]
+	path = vendor/github.com/segmentio/go-loggly
+	url = git@github.com:segmentio/go-loggly
+[submodule "github.com/eapache/go-resiliency"]
+	path = vendor/github.com/eapache/go-resiliency
+	url = git@github.com:eapache/go-resiliency
+[submodule "github.com/segmentio/backo-go"]
+	path = vendor/github.com/segmentio/backo-go
+	url = git@github.com:segmentio/backo-go
+[submodule "github.com/fatih/color"]
+	path = vendor/github.com/fatih/color
+	url = git@github.com:fatih/color
+[submodule "github.com/go-sql-driver/mysql"]
+	path = vendor/github.com/go-sql-driver/mysql
+	url = git@github.com:go-sql-driver/mysql
+[submodule "github.com/gocql/gocql"]
+	path = vendor/github.com/gocql/gocql
+	url = git@github.com:gocql/gocql
+[submodule "github.com/mattn/go-sqlite3"]
+	path = vendor/github.com/mattn/go-sqlite3
+	url = git@github.com:mattn/go-sqlite3
+[submodule "github.com/hailocab/go-hostpool"]
+	path = vendor/github.com/hailocab/go-hostpool
+	url = git@github.com:hailocab/go-hostpool
+[submodule "github.com/mattn/go-colorable"]
+	path = vendor/github.com/mattn/go-colorable
+	url = git@github.com:mattn/go-colorable
+[submodule "github.com/mattn/go-isatty"]
+	path = vendor/github.com/mattn/go-isatty
+	url = git@github.com:mattn/go-isatty
+[submodule "gopkg.in/inf.v0"]
+	path = vendor/gopkg.in/inf.v0
+	url = https://gopkg.in/inf.v0
+[submodule "vendor/github.com/dgrijalva/jwt-go"]
+	path = vendor/github.com/dgrijalva/jwt-go
+	url = https://github.com/dgrijalva/jwt-go
+[submodule "vendor/github.com/stretchr/testify"]
+	path = vendor/github.com/stretchr/testify
+	url = https://github.com/stretchr/testify
+[submodule "vendor/golang.org/x/text"]
+	path = vendor/golang.org/x/text
+	url = https://github.com/golang/text
+[submodule "github.com/samuel/go-zookeeper"]
+	path = vendor/github.com/samuel/go-zookeeper
+	url = git@github.com:samuel/go-zookeeper
+[submodule "github.com/wvanbergen/kazoo-go"]
+	path = vendor/github.com/wvanbergen/kazoo-go
+	url = git@github.com:wvanbergen/kazoo-go
+[submodule "github.com/wvanbergen/kafka"]
+	path = vendor/github.com/wvanbergen/kafka
+	url = git@github.com:wvanbergen/kafka
+[submodule "vendor/github.com/pkg/errors"]
+	path = vendor/github.com/pkg/errors
+	url = https://github.com/pkg/errors
+[submodule "vendor/github.com/uber-go/atomic"]
+	path = vendor/github.com/uber-go/atomic
+	url = https://github.com/uber-go/atomic
+[submodule "vendor/gopkg.in/readline.v1"]
+	path = vendor/gopkg.in/readline.v1
+	url = https://gopkg.in/readline.v1
+[submodule "vendor/gopkg.in/natefinch/lumberjack.v2"]
+	path = vendor/gopkg.in/natefinch/lumberjack.v2
+	url = https://gopkg.in/natefinch/lumberjack.v2
+[submodule "vendor/github.com/uber-common/zap"]
+	path = vendor/github.com/uber-go/zap
+	url = https://github.com/uber-go/zap
+[submodule "vendor/github.com/newrelic/go-agent"]
+	path = vendor/github.com/newrelic/go-agent
+	url = https://github.com/newrelic/go-agent
+[submodule "vendor/github.com/garyburd/redigo"]
+	path = vendor/github.com/garyburd/redigo
+	url = git@github.com:garyburd/redigo
+[submodule "vendor/github.com/jteeuwen/go-bindata"]
+	path = vendor/github.com/jteeuwen/go-bindata
+	url = git@github.com:jteeuwen/go-bindata.git
+[submodule "github.com/parsable/standard-issue"]
+	path = vendor/github.com/parsable/standard-issue
+	url = git@github.com:parsable/standard-issue
+[submodule "github.com/robfig/cron"]
+	path = vendor/github.com/robfig/cron
+	url = git@github.com:robfig/cron
+[submodule "thrift-api"]
+	path = thrift-api
+	url = git@github.com:parsable/thrift-api.git
+[submodule "vendor/github.com/satori/go.uuid"]
+	path = vendor/github.com/satori/go.uuid
+	url = https://github.com/satori/go.uuid
+[submodule "vendor/github.com/parsable/elastic_lib"]
+	path = vendor/github.com/parsable/elastic_lib
+	url = git@github.com:parsable/elastic_lib
+[submodule "vendor/gopkg.in/olivere/elastic.v5"]
+	path = vendor/gopkg.in/olivere/elastic.v5
+	url = https://gopkg.in/olivere/elastic.v5
+[submodule "vendor/github.com/fatih/structs"]
+	path = vendor/github.com/fatih/structs
+	url = git@github.com:fatih/structs.git
+[submodule "vendor/github.com/coocood/freecache"]
+   path = vendor/github.com/coocood/freecache
+   url = git@github.com:coocood/freecache.git
+[submodule "vendor/github.com/spaolacci/murmur3"]
+	path = vendor/github.com/spaolacci/murmur3
+	url = git@github.com:spaolacci/murmur3.git
+[submodule "vendor/github.com/davecgh/go-spew"]
+	path = vendor/github.com/davecgh/go-spew
+	url = https://github.com/davecgh/go-spew
+[submodule "vendor/github.com/eapache/go-xerial-snappy"]
+	path = vendor/github.com/eapache/go-xerial-snappy
+	url = https://github.com/eapache/go-xerial-snappy
+[submodule "vendor/github.com/pierrec/lz4"]
+	path = vendor/github.com/pierrec/lz4
+	url = https://github.com/pierrec/lz4
+[submodule "vendor/github.com/pierrec/xxHash"]
+	path = vendor/github.com/pierrec/xxHash
+	url = https://github.com/pierrec/xxHash
+[submodule "vendor/github.com/rcrowley/go-metrics"]
+	path = vendor/github.com/rcrowley/go-metrics
+	url = https://github.com/rcrowley/go-metrics
+[submodule "vendor/github.com/bsm/sarama-cluster"]
+	path = vendor/github.com/bsm/sarama-cluster
+	url = https://github.com/bsm/sarama-cluster
+[submodule "vendor/github.com/casbin"]
+	path = vendor/github.com/casbin
+	url = git@github.com:casbin/casbin.git
+[submodule "vendor/github.com/casbin/casbin"]
+	path = vendor/github.com/casbin/casbin
+	url = git@github.com:casbin/casbin.git
+[submodule "vendor/github.com/Knetic/govaluate"]
+	path = vendor/github.com/Knetic/govaluate
+	url = git@github.com:Knetic/govaluate.git
+[submodule "vendor/github.com/golang/mock"]
+	path = vendor/github.com/golang/mock
+	url = git@github.com:golang/mock.git
+[submodule "vendor/github.com/disintegration/imaging"]
+	path = vendor/github.com/disintegration/imaging
+	url = https://github.com/disintegration/imaging
+[submodule "vendor/golang.org/x/image"]
+	path = vendor/golang.org/x/image
+	url = https://go.googlesource.com/image
+[submodule "vendor/github.com/casbin"]
+	path = vendor/github.com/casbin
+	url = git@github.com:casbin/casbin.git
+[submodule "vendor/github.com/casbin/casbin"]
+	path = vendor/github.com/casbin/casbin
+	url = git@github.com:casbin/casbin.git
+[submodule "vendor/github.com/Knetic/govaluate"]
+	path = vendor/github.com/Knetic/govaluate
+	url = git@github.com:Knetic/govaluate.git
+[submodule "vendor/github.com/golang/mock"]
+	path = vendor/github.com/golang/mock
+	url = git@github.com:golang/mock.git
+[submodule "vendor/github.com/Hasdcorona"]
+	path = vendor/github.com/Hasdcorona
+	url = git@github.com:Hasdcorona/go-xacml.git
+[submodule "github.com/qiangmzsx/string-adapter"]
+	path = vendor/github.com/qiangmzsx/string-adapter
+	url = git@github.com:qiangmzsx/string-adapter
+[submodule "vendor/github.com/cespare/xxhash"]
+	path = vendor/github.com/cespare/xxhash
+	url = https://github.com/cespare/xxhash
+[submodule "vendor/github.com/golang/mock"]
+	path = vendor/github.com/golang/mock
+	url = https://github.com/golang/mock
+[submodule "vendor/github.com/go-redis/redis"]
+	path = vendor/github.com/go-redis/redis
+	url = https://github.com/go-redis/redis
+[submodule "vendor/github.com/ulule/limiter"]
+	path = vendor/github.com/ulule/limiter
+	url = https://github.com/ulule/limiter
+[submodule "vendor/github.com/microcosm-cc/bluemonday"]
+	path = vendor/github.com/microcosm-cc/bluemonday
+	url = https://github.com/microcosm-cc/bluemonday
+
