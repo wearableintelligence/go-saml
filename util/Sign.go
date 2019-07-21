@@ -18,12 +18,14 @@ func SignString(toSign string, privateKeyPath string) (string, error) {
 	signer, err := parsePrivateKey([]byte(privateKeyStr))
 	if err != nil {
 		fmt.Errorf("signer is damaged: %v", err)
+		return "", err
 	}
 
 
 	signed, err := signer.Sign([]byte(toSign))
 	if err != nil {
 		fmt.Errorf("could not sign request: %v", err)
+		return "", err
 	}
 	sig := base64.StdEncoding.EncodeToString(signed)
 
