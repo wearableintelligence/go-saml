@@ -132,5 +132,5 @@ func Decrypt(xml string, privateKeyPath string) ([]byte, error) {
 // deleteTempFile remove a file and ignore error
 // Intended to be called in a defer after the creation of a temp file to ensure cleanup
 func deleteTempFile(filename string) {
-	_ = os.Remove(filename)
+	//_ = os.Remove(filename)
 }
