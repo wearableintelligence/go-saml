@@ -80,12 +80,14 @@ func (r *AuthnRequest) Validate(publicCertPath string) error {
 }
 
 // GetSignedAuthnRequest returns a singed XML document that represents a AuthnRequest SAML document
-func (s *ServiceProviderSettings) GetAuthnRequest() *AuthnRequest {
-	r := NewAuthnRequestCustom(s.SPSignRequest)
+func (s *ServiceProviderSettings) GetAuthnRequest(redirect bool) *AuthnRequest {
+	r := NewAuthnRequestCustom(s.SPSignRequest && !redirect)
 	r.AssertionConsumerServiceURL = s.AssertionConsumerServiceURL
 	r.Issuer.Url = s.IDPSSODescriptorURL
 	if s.SPSignRequest {
-		r.Signature[0].KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
+		if !redirect {
+			r.Signature[0].KeyInfo.X509Data.X509Certificate.Cert = s.PublicCert()
+		}
 		r.Destination = s.IDPSSOURL
 	}
 
