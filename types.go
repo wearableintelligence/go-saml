@@ -26,7 +26,7 @@ type AuthnRequest struct {
 type Issuer struct {
 	XMLName xml.Name
 	SAML    string `xml:"xmlns:saml,attr,omitempty"`
-	Url     string 
+	Url     string `xml:",chardata"`
 }
 
 type NameIDPolicy struct {
