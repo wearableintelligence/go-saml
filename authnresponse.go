@@ -4,8 +4,9 @@ import (
 	"encoding/base64"
 	"encoding/xml"
 	"errors"
-	"github.com/dorsha/go-saml/util"
 	"time"
+
+	"github.com/dorsha/go-saml/util"
 )
 
 func ParseCompressedEncodedResponse(b64ResponseXML string) (*Response, error) {
@@ -315,7 +316,7 @@ func (r *Response) AddAttribute(name, value string) {
 			Type:  "xs:string",
 			Value: value,
 		},
-	 	},
+		},
 	})
 }
 
@@ -369,4 +370,3 @@ func (r *Response) GetAttribute(name string) []string {
 	}
 	return values
 }
-
