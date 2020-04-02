@@ -47,7 +47,11 @@ func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 	return &response, nil
 }
 
-func (r *Response) Validate(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time) error {
+func (r *Response) Validate(s *ServiceProviderSettings) error {
+	return r.ValidateWithoutSP(s.SPSignRequest,s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now())
+}
+
+func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time) error {
 	if r.Version != "2.0" {
 		return errors.New("unsupported SAML Version")
 	}
