@@ -59,7 +59,7 @@ func (r *Response) Validate(signed bool, assertionConsumerService, publicCertPat
 		return errors.New("no Assertions")
 	}
 
-	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
+	if signed && len(r.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
