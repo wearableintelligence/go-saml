@@ -48,6 +48,10 @@ func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 }
 
 func (r *Response) Validate(s *ServiceProviderSettings) error {
+	return r.ValidateWithoutSP(s.SPSignRequest,s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now())
+}
+
+func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time) error {
 	if r.Version != "2.0" {
 		return errors.New("unsupported SAML Version")
 	}
@@ -60,24 +64,24 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 		return errors.New("no Assertions")
 	}
 
-	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
+	if signed && len(r.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
-	if len(r.Destination) > 0 && r.Destination != s.AssertionConsumerServiceURL {
-		return errors.New("destination mismath expected: " + s.AssertionConsumerServiceURL + " not " + r.Destination)
+	if len(r.Destination) > 0 && r.Destination != assertionConsumerService {
+		return errors.New("destination mismath expected: " + assertionConsumerService + " not " + r.Destination)
 	}
 
 	if r.Assertion.Subject.SubjectConfirmation.Method != "urn:oasis:names:tc:SAML:2.0:cm:bearer" {
 		return errors.New("assertion method exception")
 	}
 
-	if r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient != s.AssertionConsumerServiceURL {
-		return errors.New("subject recipient mismatch, expected: " + s.AssertionConsumerServiceURL + " not " + r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient)
+	if r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient != assertionConsumerService {
+		return errors.New("subject recipient mismatch, expected: " + assertionConsumerService + " not " + r.Assertion.Subject.SubjectConfirmation.SubjectConfirmationData.Recipient)
 	}
 
-	if s.SPSignRequest {
-		err := r.VerifySignature(s.IDPPublicCertPath)
+	if signed {
+		err := r.VerifySignature(publicCertPath)
 		if err != nil {
 			return err
 		}
@@ -89,7 +93,7 @@ func (r *Response) Validate(s *ServiceProviderSettings) error {
 	if e != nil {
 		return e
 	}
-	if notOnOrAfter.Before(time.Now()) {
+	if notOnOrAfter.Before(timeToValidate) {
 		return errors.New("assertion has expired on: " + expires)
 	}
 
@@ -316,7 +320,7 @@ func (r *Response) AddAttribute(name, value string) {
 			Type:  "xs:string",
 			Value: value,
 		},
-	 	},
+		},
 	})
 }
 
@@ -370,4 +374,3 @@ func (r *Response) GetAttribute(name string) []string {
 	}
 	return values
 }
-
