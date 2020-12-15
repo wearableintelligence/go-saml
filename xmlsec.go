@@ -1,17 +1,21 @@
 package saml
 
 import (
+	"bytes"
+	"encoding/xml"
 	"errors"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
+
+	xrv "github.com/mattermost/xml-roundtrip-validator"
 )
 
 const (
-	xmlResponseID = "urn:oasis:names:tc:SAML:2.0:protocol:Response"
-	xmlRequestID  = "urn:oasis:names:tc:SAML:2.0:protocol:AuthnRequest"
-	xmlLogoutRequestID  = "urn:oasis:names:tc:SAML:2.0:protocol:LogoutRequest"
+	xmlResponseID      = "urn:oasis:names:tc:SAML:2.0:protocol:Response"
+	xmlRequestID       = "urn:oasis:names:tc:SAML:2.0:protocol:AuthnRequest"
+	xmlLogoutRequestID = "urn:oasis:names:tc:SAML:2.0:protocol:LogoutRequest"
 )
 
 // SignRequest sign a SAML 2.0 AuthnRequest
@@ -133,4 +137,12 @@ func Decrypt(xml string, privateKeyPath string) ([]byte, error) {
 // Intended to be called in a defer after the creation of a temp file to ensure cleanup
 func deleteTempFile(filename string) {
 	_ = os.Remove(filename)
+}
+
+// XMLParse ...
+func XMLParse(bXML []byte, obj interface{}) error {
+	if err := xrv.Validate(bytes.NewReader(bXML)); err != nil {
+		return err
+	}
+	return xml.Unmarshal(bXML, obj)
 }

@@ -16,7 +16,7 @@ func ParseCompressedEncodedResponse(b64ResponseXML string) (*Response, error) {
 		return nil, err
 	}
 	bXML := util.Decompress(compressedXML)
-	err = xml.Unmarshal(bXML, &authnResponse)
+	err = XMLParse(bXML, &authnResponse)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func ParseEncodedResponse(b64ResponseXML string) (*Response, error) {
 
 func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 	response := Response{}
-	err := xml.Unmarshal(responseXML, &response)
+	err := XMLParse(responseXML, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (r *Response) Decrypt(SPPrivateCertPath string) (*Response, error) {
 		return nil, err
 	}
 	authnResponse := &Response{}
-	err = xml.Unmarshal(decrypted_xml, &authnResponse)
+	err = XMLParse(decrypted_xml, &authnResponse)
 	authnResponse.originalString = string(decrypted_xml)
 	return authnResponse, err
 }
