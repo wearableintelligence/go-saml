@@ -20,6 +20,7 @@ import (
 	"errors"
 	"net/url"
 	"time"
+
 	"github.com/dorsha/go-saml/util"
 )
 
@@ -31,7 +32,7 @@ func ParseCompressedEncodedRequest(b64RequestXML string) (*AuthnRequest, error) 
 	}
 	bXML := util.Decompress(compressedXML)
 
-	err = xml.Unmarshal(bXML, &authnRequest)
+	err = XMLParse(bXML, &authnRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +50,7 @@ func ParseEncodedRequest(b64RequestXML string) (*AuthnRequest, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = xml.Unmarshal(bytesXML, &authnRequest)
+	err = XMLParse(bytesXML, &authnRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -128,7 +129,7 @@ func NewAuthnRequestCustom(sign bool) *AuthnRequest {
 			XMLName: xml.Name{
 				Local: "saml:Issuer",
 			},
-			Url:  "", // caller must populate ar.AppSettings.Issuer
+			Url: "", // caller must populate ar.AppSettings.Issuer
 		},
 		IssueInstant: time.Now().UTC().Format(time.RFC3339),
 		NameIDPolicy: &NameIDPolicy{

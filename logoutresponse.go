@@ -16,7 +16,7 @@ func ParseCompressedEncodedLogoutResponse(b64ResponseXML string) (*LogoutRespons
 		return nil, err
 	}
 	bXML := util.Decompress(compressedXML)
-	err = xml.Unmarshal(bXML, &logoutresponse)
+	err = XMLParse(bXML, &logoutresponse)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func ParseEncodedLogoutResponse(b64ResponseXML string) (*LogoutResponse, error) 
 
 func ParseDecodedLogoutResponse(responseXML []byte) (*LogoutResponse, error) {
 	response := LogoutResponse{}
-	err := xml.Unmarshal(responseXML, &response)
+	err := XMLParse(responseXML, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func (r *LogoutResponse) Decrypt(SPPrivateCertPath string) (*LogoutResponse, err
 		return nil, err
 	}
 	logoutResponse := &LogoutResponse{}
-	err = xml.Unmarshal(decrypted_xml, &logoutResponse)
+	err = XMLParse(decrypted_xml, &logoutResponse)
 	logoutResponse.originalString = string(decrypted_xml)
 	return logoutResponse, err
 }
