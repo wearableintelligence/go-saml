@@ -32,6 +32,23 @@ func SignString(toSign string, privateKeyPath string) (string, error) {
 	return sig ,err
 }
 
+func SignStringWithKeyAsString(toSign string, privateKey string) (string, error) {
+	signer, err := parsePrivateKey([]byte(privateKey))
+	if err != nil {
+		fmt.Errorf("signer is damaged: %v", err)
+		return "", err
+	}
+
+
+	signed, err := signer.Sign([]byte(toSign))
+	if err != nil {
+		fmt.Errorf("could not sign request: %v", err)
+		return "", err
+	}
+	sig := base64.StdEncoding.EncodeToString(signed)
+
+	return sig ,err
+}
 
 // parsePublicKey parses a PEM encoded private key.
 func parsePrivateKey(pemBytes []byte) (Signer, error) {
