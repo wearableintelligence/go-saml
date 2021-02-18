@@ -48,7 +48,7 @@ func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 }
 
 func (r *Response) Validate(s *ServiceProviderSettings) error {
-	return r.ValidateWithoutSP(s.SPSignRequest,s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now())
+	return r.ValidateWithoutSP(s.SPVerifyRequest, s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now())
 }
 
 func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time) error {
