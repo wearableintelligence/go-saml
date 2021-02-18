@@ -57,11 +57,11 @@ func (r *LogoutResponse) Validate(s *ServiceProviderSettings) error {
 		return errors.New("missing ID attribute on SAML Response")
 	}
 
-	if s.SPSignRequest && len(r.Signature.SignatureValue.Value) == 0 {
+	if s.SPVerifyRequest && len(r.Signature.SignatureValue.Value) == 0 {
 		return errors.New("no signature")
 	}
 
-	if s.SPSignRequest {
+	if s.SPVerifyRequest {
 		err := r.VerifySignature(s.IDPPublicCertPath)
 		if err != nil {
 			return err
