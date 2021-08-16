@@ -48,10 +48,10 @@ func ParseDecodedResponse(responseXML []byte) (*Response, error) {
 }
 
 func (r *Response) Validate(s *ServiceProviderSettings) error {
-	return r.ValidateWithoutSP(s.SPVerifyRequest, s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now())
+	return r.ValidateWithoutSP(s.SPVerifyRequest, s.AssertionConsumerServiceURL, s.IDPPublicCertPath, time.Now(), s.enabledKeyData)
 }
 
-func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time) error {
+func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publicCertPath string, timeToValidate time.Time, enabledKeyData string) error {
 	if r.Version != "2.0" {
 		return errors.New("unsupported SAML Version")
 	}
@@ -81,7 +81,7 @@ func (r *Response) ValidateWithoutSP(signed bool, assertionConsumerService, publ
 	}
 
 	if signed {
-		err := r.VerifySignature(publicCertPath)
+		err := r.VerifySignature(publicCertPath, enabledKeyData)
 		if err != nil {
 			return err
 		}
@@ -138,12 +138,12 @@ func (r *Response) Decrypt(SPPrivateCertPath string) (*Response, error) {
 	return authnResponse, err
 }
 
-func (r *Response) VerifySignature(IDPPublicCertPath string) error {
+func (r *Response) VerifySignature(IDPPublicCertPath string, enabledKeyData string) error {
 	sigTagName, err := r.FindSignatureTagName()
 	if err != nil {
 		return err
 	}
-	return VerifyResponseSignature(r.originalString, IDPPublicCertPath, sigTagName)
+	return VerifyResponseSignature(r.originalString, IDPPublicCertPath, sigTagName, enabledKeyData)
 }
 
 func NewSignedResponse() *Response {

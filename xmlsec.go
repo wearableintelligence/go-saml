@@ -75,21 +75,21 @@ func sign(xml string, privateKeyPath string, id string) (string, error) {
 // VerifyResponseSignature verify signature of a SAML 2.0 Response document
 // `publicCertPath` must be a path on the filesystem, xmlsec1 is run out of process
 // through `exec`
-func VerifyResponseSignature(xml, publicCertPath, xmlNodeName string) error {
+func VerifyResponseSignature(xml, publicCertPath, xmlNodeName string, enabledKeyData string) error {
 	if xmlNodeName == "" {
 		xmlNodeName = xmlResponseID
 	}
-	return verify(xml, publicCertPath, xmlNodeName)
+	return verify(xml, publicCertPath, xmlNodeName, enabledKeyData)
 }
 
 // VerifyRequestSignature verify signature of a SAML 2.0 AuthnRequest document
 // `publicCertPath` must be a path on the filesystem, xmlsec1 is run out of process
 // through `exec`
-func VerifyRequestSignature(xml string, publicCertPath string) error {
-	return verify(xml, publicCertPath, xmlRequestID)
+func VerifyRequestSignature(xml string, publicCertPath string, enabledKeyData string) error {
+	return verify(xml, publicCertPath, xmlRequestID, enabledKeyData)
 }
 
-func verify(xml string, publicCertPath string, id string) error {
+func verify(xml string, publicCertPath string, id string, enabledKeyData string) error {
 	//Write saml to
 	samlXmlsecInput, err := ioutil.TempFile(os.TempDir(), "tmpgs")
 	if err != nil {
@@ -101,7 +101,13 @@ func verify(xml string, publicCertPath string, id string) error {
 	defer deleteTempFile(samlXmlsecInput.Name())
 
 	//fmt.Println("xmlsec1", "--verify", "--pubkey-cert-pem", publicCertPath, "--id-attr:ID", id, samlXmlsecInput.Name())
-	_, err = exec.Command("xmlsec1", "--verify", "--pubkey-cert-pem", publicCertPath, "--id-attr:ID", id, samlXmlsecInput.Name()).CombinedOutput()
+	if enabledKeyData != "" {
+		_, err = exec.Command("xmlsec1", "--verify", "--enabled-key-data", enabledKeyData, "--pubkey-cert-pem", publicCertPath, "--id-attr:ID", id, samlXmlsecInput.Name()).CombinedOutput()
+	} else {
+		_, err = exec.Command("xmlsec1", "--verify", "--pubkey-cert-pem", publicCertPath, "--id-attr:ID", id, samlXmlsecInput.Name()).CombinedOutput()
+	}
+
+
 	if err != nil {
 		return errors.New("error verifing signature: " + err.Error())
 	}

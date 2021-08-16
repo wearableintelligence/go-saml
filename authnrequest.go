@@ -61,7 +61,7 @@ func ParseEncodedRequest(b64RequestXML string) (*AuthnRequest, error) {
 	return &authnRequest, nil
 }
 
-func (r *AuthnRequest) Validate(publicCertPath string) error {
+func (r *AuthnRequest) Validate(publicCertPath string, keyData string) error {
 	if r.Version != "2.0" {
 		return errors.New("unsupported SAML Version")
 	}
@@ -72,7 +72,7 @@ func (r *AuthnRequest) Validate(publicCertPath string) error {
 
 	// TODO more validation
 
-	err := VerifyRequestSignature(r.originalString, publicCertPath)
+	err := VerifyRequestSignature(r.originalString, publicCertPath, keyData)
 	if err != nil {
 		return err
 	}

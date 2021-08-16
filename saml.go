@@ -21,6 +21,7 @@ type ServiceProviderSettings struct {
 	publicCert    string
 	privateKey    string
 	iDPPublicCert string
+	enabledKeyData string
 }
 
 type IdentityProviderSettings struct {

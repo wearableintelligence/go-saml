@@ -62,7 +62,7 @@ func (r *LogoutResponse) Validate(s *ServiceProviderSettings) error {
 	}
 
 	if s.SPVerifyRequest {
-		err := r.VerifySignature(s.IDPPublicCertPath)
+		err := r.VerifySignature(s.IDPPublicCertPath, s.enabledKeyData)
 		if err != nil {
 			return err
 		}
@@ -99,12 +99,12 @@ func (r *LogoutResponse) Decrypt(SPPrivateCertPath string) (*LogoutResponse, err
 	return logoutResponse, err
 }
 
-func (r *LogoutResponse) VerifySignature(IDPPublicCertPath string) error {
+func (r *LogoutResponse) VerifySignature(IDPPublicCertPath string, enabledKeyData string) error {
 	sigTagName, err := r.FindSignatureTagName()
 	if err != nil {
 		return err
 	}
-	return VerifyResponseSignature(r.originalString, IDPPublicCertPath, sigTagName)
+	return VerifyResponseSignature(r.originalString, IDPPublicCertPath, sigTagName, enabledKeyData)
 }
 
 func NewSignedlogoutResponse() *LogoutResponse {
